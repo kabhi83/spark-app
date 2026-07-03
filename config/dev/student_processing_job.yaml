@@ -1,0 +1,38 @@
+# config/dev/example_etl_job.yaml
+# ==============================================================================
+# Local Development Override
+# ==============================================================================
+
+job:
+  input:
+    path: "data/input/students.parquet"   # Local directory path
+  output:
+    path: "data/output/processed_students"  # Local directory path
+
+spark:
+  master: "local[*]"                          # Uses all available local CPU cores
+  config:
+    spark.submit.deployMode: "client"         # Driver runs locally on your machine
+    spark.sql.shuffle.partitions: "4"         # Keeps partitions low so local execution is fast
+
+    # Disable YARN features that don't exist on a local laptop
+    spark.dynamicAllocation.enabled: "false"
+    spark.shuffle.service.enabled: "false"
+
+# ── Dev Logging Override ──────────────────────────────────────────────────────
+# This overrides the global INFO level to DEBUG just for this job locally
+logging:
+  root:
+    level: "DEBUG"
+  loggers:
+    pyspark:
+      level: "WARN"   # Quiet down noisy internal Spark logs while debugging
+    py4j:
+      level: "WARN"   # Quiet down Java gateway logs
+
+# Core transformations parameters passed dynamically to your transformers
+transformations:
+  cast_types:
+    age: "int"
+    gpa: "double"
+  filter_condition: "age >= 18" # Standard SQL expression string

@@ -1,0 +1,21 @@
+# config/base_config.yaml
+spark:
+  master: "yarn"
+  config:
+    spark.submit.deployMode: "cluster"
+    spark.dynamicAllocation.enabled: "true"
+
+logging:
+  version: 1
+  disable_existing_loggers: false
+  formatters:
+    standard:
+      format: "%(asctime)s [%(levelname)s] %(name)s - %(message)s"
+  handlers:
+    console:
+      class: "logging.StreamHandler"
+      level: "INFO"                    # Dev defaults to INFO globally
+      stream: "ext://sys.stdout"
+  root:
+    level: "INFO"
+    handlers: ["console"]
