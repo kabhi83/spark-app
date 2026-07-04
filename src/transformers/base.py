@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 from pyspark.sql import DataFrame
 
+
 class BaseTransformer(ABC):
     """Abstract base class for all DataFrame transformers
 

@@ -8,6 +8,7 @@ from typing import Any
 
 import yaml
 
+
 def load_config(config_path: str | Path) -> dict[str|Any]:
     """
     Load a YAML config file and overlay environment variable overrides.

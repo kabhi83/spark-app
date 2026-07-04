@@ -7,6 +7,7 @@ import os
 import sys
 from typing import Optional
 
+
 def get_logger(name:str, level:Optional[str] = None) -> logging.Logger:
     """Return a logger configured for the given module name
 

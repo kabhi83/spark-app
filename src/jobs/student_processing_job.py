@@ -1,7 +1,8 @@
-from src.core.job import BaseJob
-from src.transformers.cleanup import CastColumnTransformer, FilterTransformer
-from pyspark.sql import DataFrame
 import logging
+
+from src.core.job import BaseJob
+from transformers.cleanup import CastColumnTransformer, FilterTransformer
+from transformers.custom_enrichment import GradeEnrichmentTransformer
 
 logger = logging.getLogger(__name__)
 
@@ -34,9 +35,13 @@ class StudentProcessingJob(BaseJob):
         cast_transformer = CastColumnTransformer(cast_mapping)
         filter_transformer = FilterTransformer(filter_expr)
 
-        # Execute transformations sequentially
-        casted_df = cast_transformer.transform(raw_df)
-        processed_df = filter_transformer.transform(casted_df)
+        # Instantiate our dynamic UDF Transformer (Read from 'gpa', write to new 'letter_grade')
+        udf_transformer = GradeEnrichmentTransformer(input_col="gpa", output_col="letter_grade")
+
+        # Execute pipeline
+        df_casted = cast_transformer.transform(raw_df)
+        df_filtered = filter_transformer.transform(df_casted)
+        processed_df = udf_transformer.transform(df_filtered)
 
         # 4. Load / Write
         print("--- Processed Output Schema & Data ---")

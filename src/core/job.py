@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
-from app_config import BaseConfig
+
 from pyspark.sql import SparkSession
+
+from core.app_config import BaseConfig
 
 
 class BaseJob(ABC):
