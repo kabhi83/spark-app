@@ -4,6 +4,7 @@ spark:
   config:
     spark.submit.deployMode: "cluster"
     spark.dynamicAllocation.enabled: "true"
+    spark.sql.execution.arrow.pyspark.enabled: "true"
 
 logging:
   version: 1

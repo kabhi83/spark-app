@@ -1,4 +1,4 @@
-from core.transformer import BaseTransformer
+from transformers.base import BaseTransformer
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import udf
 from pyspark.sql.types import StringType
