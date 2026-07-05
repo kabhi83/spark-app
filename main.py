@@ -13,6 +13,13 @@ SRC_DIR = os.path.join(PROJECT_ROOT, "src")
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
+# Propagate 'src' to PYTHONPATH so Spark executor worker processes can unpickle UDFs
+# that reference modules under src/ (e.g. transformers.base, transformers.cleanup)
+existing_pythonpath = os.environ.get("PYTHONPATH", default="")
+if SRC_DIR not in existing_pythonpath.split(os.pathsep):
+    os.environ["PYTHONPATH"] = SRC_DIR + (os.pathsep + existing_pythonpath if existing_pythonpath else "")
+
+
 
 # ── 2. Helper Utilities ───────────────────────────────────────────────────────
 def get_job_class(job_module_name: str):

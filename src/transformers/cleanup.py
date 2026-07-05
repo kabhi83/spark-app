@@ -5,7 +5,7 @@ from __future__ import annotations
 from pyspark.sql import DataFrame, functions as F
 from pyspark.sql.types import DataType
 
-from src.utils.logger import get_logger
+from utils.logger import get_logger
 from transformers.base import BaseTransformer
 
 logger = get_logger(__name__)

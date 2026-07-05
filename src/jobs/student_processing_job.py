@@ -1,6 +1,6 @@
 import logging
 
-from src.core.job import BaseJob
+from core.job import BaseJob
 from transformers.cleanup import CastColumnTransformer, FilterTransformer
 from transformers.custom_enrichment import GradeEnrichmentTransformer
 
